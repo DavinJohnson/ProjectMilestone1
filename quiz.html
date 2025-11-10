@@ -59,3 +59,189 @@
 
         <h1>Web Browser Self-Assessment Quiz</h1>
         <p>Test your knowledge of the core architecture, history, and protocols of the web browser.</p>
+
+        <form id="quiz-form">
+
+            <div class="question" id="q1">
+                <p>1. The web browser acts as the **___________** within the client/server architecture.</p>
+                <input type="text" id="answer1" name="q1" placeholder="Enter one word">
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" id="q2">
+                <p>2. Which protocol is primarily responsible for defining the style and appearance of web pages?</p>
+                <input type="radio" id="q2a" name="q2" value="a"><label for="q2a">A. HTML</label><br>
+                <input type="radio" id="q2b" name="q2" value="b"><label for="q2b">B. CSS</label><br>
+                <input type="radio" id="q2c" name="q2" value="c"><label for="q2c">C. HTTP</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" id="q3">
+                <p>3. Which browser was the first to display images alongside text rather than in a separate window?</p>
+                <input type="radio" id="q3a" name="q3" value="a"><label for="q3a">A. WorldWideWeb</label><br>
+                <input type="radio" id="q3b" name="q3" value="b"><label for="q3b">B. Netscape Navigator</label><br>
+                <input type="radio" id="q3c" name="q3" value="c"><label for="q3c">C. Mosaic</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" id="q4">
+                <p>4. The browser's primary function is to interpret which foundational language used to describe the structure of web pages?</p>
+                <input type="radio" id="q4a" name="q4" value="a"><label for="q4a">A. Javascript</label><br>
+                <input type="radio" id="q4b" name="q4" value="b"><label for="q4b">B. HTML</label><br>
+                <input type="radio" id="q4c" name="q4" value="c"><label for="q4c">C. Python</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" id="q5">
+                <p>5. **(Select all that apply)** Which of these are names of well-known browser rendering engines?</p>
+                <input type="checkbox" id="q5a" name="q5" value="a"><label for="q5a">A. Gecko (used in Firefox)</label><br>
+                <input type="checkbox" id="q5b" name="q5" value="b"><label for="q5b">B. Trident (used in older IE/Edge)</label><br>
+                <input type="checkbox" id="q5c" name="q5" value="c"><label for="q5c">C. Java Applet</label><br>
+                <input type="checkbox" id="q5d" name="q5" value="d"><label for="q5d">D. WebKit (used in Chrome/Safari)</label>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="quiz-controls">
+                <button type="button" onclick="gradeQuiz()">Submit Quiz</button> 
+                <button type="button" onclick="resetQuiz()">Retake / Reset Quiz</button>
+            </div>
+        </form>
+
+
+
+        <div id="results" style="display:none;">
+            <h2>Quiz Results</h2>
+            <div id="score-summary"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>This is a class project for IT 3203. <a href="https://ksuweb.github.io/IT3203/" target="_blank">Class Website</a></p>
+    </footer>
+
+    <script>
+
+        const correctAnswers = {
+            q1: 'client', 
+            q2: 'b',      
+            q3: 'c',      
+            q4: 'b',      
+            q5: ['a', 'b', 'd'] 
+        };
+        const totalQuestions = 5;
+
+        function gradeQuiz() {
+            let score = 0; 
+            const form = document.getElementById('quiz-form');
+            
+            const detailedResults = document.getElementById('detailed-results');
+            const scoreSummary = document.getElementById('score-summary');
+            
+            detailedResults.innerHTML = '';
+            
+            form.querySelector('button[onclick="gradeQuiz()"]').disabled = true;
+
+            const q1UserAnswer = form.elements['q1'].value.trim().toLowerCase();
+            let q1IsCorrect = (q1UserAnswer === correctAnswers.q1);
+            if (q1IsCorrect) {
+                score++; 
+            }
+            displayResult('q1', q1IsCorrect, `Correct Answer: ${correctAnswers.q1}`);
+
+            for (let i = 2; i <= 4; i++) {
+                const qName = 'q' + i;
+                
+                const qUserAnswer = form.elements[qName].value; 
+                
+                let qIsCorrect = (qUserAnswer === correctAnswers[qName]);
+                if (qIsCorrect) {
+                    score++;
+                }
+
+                const correctOptionId = qName + correctAnswers[qName];
+                const correctAnswerLabel = document.querySelector(`label[for="${correctOptionId}"]`).textContent;
+                
+                displayResult(qName, qIsCorrect, `Correct Answer: ${correctAnswerLabel}`);
+            }
+
+            const q5Checkboxes = form.elements['q5'];
+            let q5UserAnswers = [];
+            
+            q5Checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    q5UserAnswers.push(checkbox.value);
+                }
+            });
+
+            let q5IsCorrect = (q5UserAnswers.length === correctAnswers.q5.length) &&
+                                correctAnswers.q5.every(function(val) {
+                                    return q5UserAnswers.includes(val);
+                                });
+            if (q5IsCorrect) {
+                score++;
+            }
+
+            const q5CorrectLabels = correctAnswers.q5.map(function(val) {
+                return document.querySelector(`label[for="q5${val}"]`).textContent;
+            }).join(', ');
+
+            displayResult('q5', q5IsCorrect, `Correct Answers: ${q5CorrectLabels}`);
+
+            const percentage = (score / totalQuestions) * 100;
+            const passStatus = (percentage >= 60) ? 'PASS' : 'FAIL'; 
+            const passFailClass = (percentage >= 60) ? 'pass' : 'fail';
+            
+            scoreSummary.innerHTML = `
+                <div class="${passFailClass}">Overall Result: ${passStatus}</div>
+                <p>Total Score: <b>${score} / ${totalQuestions}</b> (${percentage.toFixed(0)}%)</p>
+            `;
+
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function displayResult(qID, isCorrect, correctAnswerText) {
+            const statusText = isCorrect ? 'Correct' : 'Incorrect';
+            const statusClass = isCorrect ? 'correct' : 'incorrect';
+            
+            const feedbackElement = document.querySelector(`#${qID} .feedback`);
+            
+            const questionText = document.querySelector(`#${qID} > p`).textContent;
+
+            feedbackElement.innerHTML = `
+                Status: <span class="${statusClass}">${statusText}</span>
+            `;
+            
+            const detailedResults = document.getElementById('detailed-results');
+            const detailedEntry = document.createElement('p');
+            
+            let entryText = `
+                <b>Q${qID.slice(1)}:</b> ${questionText} <br>
+                Result: <span class="${statusClass}">${statusText}</span> 
+            `;
+            
+            if (!isCorrect) {
+                entryText += ` | Expected: ${correctAnswerText}`;
+            }
+
+            detailedEntry.innerHTML = entryText;
+            detailedResults.appendChild(detailedEntry);
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-form').reset();
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('detailed-results').innerHTML = '';
+            document.getElementById('score-summary').innerHTML = '';
+            
+            document.getElementById('quiz-form').querySelector('button[onclick="gradeQuiz()"]').disabled = false;
+            
+            const allFeedback = document.querySelectorAll('.feedback');
+            allFeedback.forEach(function(feedbackBox) {
+                feedbackBox.innerHTML = '';
+            });
+        }
+    </script>
+</body>
+</html>

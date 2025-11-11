@@ -6,35 +6,47 @@
     <title>Self-Assessment Quiz</title>
     
     <link rel="stylesheet" href="style.css">
-
-     <style>
+    
+    <!-- 
+        Simplified Quiz-specific styles.
+        These are just for the required colors and basic spacing.
+    -->
+    <style>
         .question {
+            /* Basic spacing for each question block */
             margin-bottom: 20px; 
             padding: 10px;
             border: 1px solid #ccc;
         }
         .question p {
+            /* Makes the question text bold */
             font-weight: bold; 
             margin-bottom: 5px;
         }
 
+        /* Required Colors for Results */
         .correct {
+            /* Green text for "Correct" */
             color: green; 
         }
         .incorrect {
+            /* Red text for "Incorrect" */
             color: red; 
         }
         .pass {
+            /* Green background for "PASS" */
             background-color: #d4edda; 
             border: 1px solid green;
             padding: 5px;
         }
         .fail {
+            /* Red background for "FAIL" */
             background-color: #f8d7da; 
             border: 1px solid red;
             padding: 5px;
         }
         #results {
+            /* A dashed border for the results box */
             margin-top: 20px;
             padding: 15px;
             border: 2px dashed #333;
@@ -43,14 +55,14 @@
 </head>
 <body>
 
-     <nav id="main-nav">
+    <nav id="main-nav">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Core Architecture</a></li>
             <li><a href="history.html">History & Evolution</a></li>
             <li><a href="concepts.html">Key Concepts</a></li>
             <li><a href="references.html">References</a></li>
-            <li><a href="quiz.html">Self-Assessment Quiz</a></li>
+            <li><a href="quiz.html">Self-Assessment Quiz</a></li> <!-- NEW LINK -->
             <li><a href="about.html">About Me / Project</a></li>
         </ul>
     </nav>
@@ -60,22 +72,37 @@
         <h1>Web Browser Self-Assessment Quiz</h1>
         <p>Test your knowledge of the core architecture, history, and protocols of the web browser.</p>
 
+        <!-- 
+           HTML Form Elements 
+          This form holds all the questions.
+        -->
         <form id="quiz-form">
 
+            <!-- 
+              Question 1: Fill-in-the-Blank (1/5)
+            -->
             <div class="question" id="q1">
                 <p>1. The web browser acts as the **___________** within the client/server architecture.</p>
+                <!-- Documentation: Simple text input for the fill-in-the-blank question -->
                 <input type="text" id="answer1" name="q1" placeholder="Enter one word">
                 <div class="feedback"></div>
             </div>
 
+            <!-- 
+             Question 2: Multiple-Choice (2/5)
+            -->
             <div class="question" id="q2">
                 <p>2. Which protocol is primarily responsible for defining the style and appearance of web pages?</p>
+                <!-- Documentation: Radio buttons for a single-choice question -->
                 <input type="radio" id="q2a" name="q2" value="a"><label for="q2a">A. HTML</label><br>
                 <input type="radio" id="q2b" name="q2" value="b"><label for="q2b">B. CSS</label><br>
                 <input type="radio" id="q2c" name="q2" value="c"><label for="q2c">C. HTTP</label>
                 <div class="feedback"></div>
             </div>
 
+            <!-- 
+              Question 3: Multiple-Choice (3/5)
+            -->
             <div class="question" id="q3">
                 <p>3. Which browser was the first to display images alongside text rather than in a separate window?</p>
                 <input type="radio" id="q3a" name="q3" value="a"><label for="q3a">A. WorldWideWeb</label><br>
@@ -84,6 +111,9 @@
                 <div class="feedback"></div>
             </div>
 
+            <!-- 
+              Question 4: Multiple-Choice (4/5)
+            -->
             <div class="question" id="q4">
                 <p>4. The browser's primary function is to interpret which foundational language used to describe the structure of web pages?</p>
                 <input type="radio" id="q4a" name="q4" value="a"><label for="q4a">A. Javascript</label><br>
@@ -92,8 +122,12 @@
                 <div class="feedback"></div>
             </div>
 
+            <!-- 
+             Question 5: Multi-Selection (5/5)
+            -->
             <div class="question" id="q5">
                 <p>5. **(Select all that apply)** Which of these are names of well-known browser rendering engines?</p>
+                <!-- Checkboxes for a multi-select question -->
                 <input type="checkbox" id="q5a" name="q5" value="a"><label for="q5a">A. Gecko (used in Firefox)</label><br>
                 <input type="checkbox" id="q5b" name="q5" value="b"><label for="q5b">B. Trident (used in older IE/Edge)</label><br>
                 <input type="checkbox" id="q5c" name="q5" value="c"><label for="q5c">C. Java Applet</label><br>
@@ -101,14 +135,18 @@
                 <div class="feedback"></div>
             </div>
 
+            <!-- 
+              Submit and Reset Buttons
+            -->
             <div class="quiz-controls">
                 <button type="button" onclick="gradeQuiz()">Submit Quiz</button> 
                 <button type="button" onclick="resetQuiz()">Retake / Reset Quiz</button>
             </div>
         </form>
 
-
-
+        <!-- 
+         Results Display Area
+        -->
         <div id="results" style="display:none;">
             <h2>Quiz Results</h2>
             <div id="score-summary"></div>
@@ -116,42 +154,49 @@
         </div>
     </div>
 
+    <!-- Consistent Footer -->
     <footer>
         <p>This is a class project for IT 3203. <a href="https://ksuweb.github.io/IT3203/" target="_blank">Class Website</a></p>
     </footer>
 
+    <!-- 
+      JavaScript for Quiz Functionality
+    -->
     <script>
-
+        // 1. Define Correct Answers 
+        // We store the correct answers in an object for easy checking.
         const correctAnswers = {
-            q1: 'client', 
-            q2: 'b',      
-            q3: 'c',      
-            q4: 'b',      
-            q5: ['a', 'b', 'd'] 
+            q1: 'client', // Answer for question 1
+            q2: 'b',      // Answer for question 2 (CSS)
+            q3: 'c',      // Answer for question 3 (Mosaic)
+            q4: 'b',      // Answer for question 4 (HTML)
+            q5: ['a', 'b', 'd'] // An array for the multi-select question 5 (Gecko, Trident, WebKit)
         };
         const totalQuestions = 5;
 
+        // 2. Grade Quiz Function
         function gradeQuiz() {
-            let score = 0; 
+            let score = 0;
             const form = document.getElementById('quiz-form');
-            
             const detailedResults = document.getElementById('detailed-results');
             const scoreSummary = document.getElementById('score-summary');
             
             detailedResults.innerHTML = '';
             
+            // Disable the submit button so the user can't resubmit
             form.querySelector('button[onclick="gradeQuiz()"]').disabled = true;
 
+            //  Check Q1: Fill-in-the-Blank
             const q1UserAnswer = form.elements['q1'].value.trim().toLowerCase();
             let q1IsCorrect = (q1UserAnswer === correctAnswers.q1);
             if (q1IsCorrect) {
-                score++; 
+                score++;
             }
             displayResult('q1', q1IsCorrect, `Correct Answer: ${correctAnswers.q1}`);
 
+            // Check Q2, Q3, Q4: Multiple Choice (Radio) 
             for (let i = 2; i <= 4; i++) {
                 const qName = 'q' + i;
-                
                 const qUserAnswer = form.elements[qName].value; 
                 
                 let qIsCorrect = (qUserAnswer === correctAnswers[qName]);
@@ -165,15 +210,16 @@
                 displayResult(qName, qIsCorrect, `Correct Answer: ${correctAnswerLabel}`);
             }
 
+            // Check Q5: Multi-Selection (Checkbox) 
             const q5Checkboxes = form.elements['q5'];
             let q5UserAnswers = [];
-            
             q5Checkboxes.forEach(function(checkbox) {
                 if (checkbox.checked) {
                     q5UserAnswers.push(checkbox.value);
                 }
             });
 
+            // Check if user answers match the correct answers array exactly
             let q5IsCorrect = (q5UserAnswers.length === correctAnswers.q5.length) &&
                                 correctAnswers.q5.every(function(val) {
                                     return q5UserAnswers.includes(val);
@@ -182,36 +228,42 @@
                 score++;
             }
 
+            // Get the text of all correct answers to show the user
             const q5CorrectLabels = correctAnswers.q5.map(function(val) {
                 return document.querySelector(`label[for="q5${val}"]`).textContent;
             }).join(', ');
 
             displayResult('q5', q5IsCorrect, `Correct Answers: ${q5CorrectLabels}`);
 
+            // Display Final Summary
             const percentage = (score / totalQuestions) * 100;
             const passStatus = (percentage >= 60) ? 'PASS' : 'FAIL'; 
             const passFailClass = (percentage >= 60) ? 'pass' : 'fail';
             
+            // REQUIRED: Show Pass/Fail and Total Score
             scoreSummary.innerHTML = `
                 <div class="${passFailClass}">Overall Result: ${passStatus}</div>
                 <p>Total Score: <b>${score} / ${totalQuestions}</b> (${percentage.toFixed(0)}%)</p>
             `;
 
+            // Finally, make the results div visible
             document.getElementById('results').style.display = 'block';
         }
 
+        // 3. Display Result Helper Function 
         function displayResult(qID, isCorrect, correctAnswerText) {
             const statusText = isCorrect ? 'Correct' : 'Incorrect';
             const statusClass = isCorrect ? 'correct' : 'incorrect';
             
             const feedbackElement = document.querySelector(`#${qID} .feedback`);
-            
             const questionText = document.querySelector(`#${qID} > p`).textContent;
 
+            // Show result (correct or incorrect) for each question (under the question)
             feedbackElement.innerHTML = `
                 Status: <span class="${statusClass}">${statusText}</span>
             `;
             
+            // Show result and answer for each question (in the results box)
             const detailedResults = document.getElementById('detailed-results');
             const detailedEntry = document.createElement('p');
             
@@ -228,15 +280,20 @@
             detailedResults.appendChild(detailedEntry);
         }
 
+        // 4. Reset Quiz Function
         function resetQuiz() {
+            // Clear all user inputs
             document.getElementById('quiz-form').reset();
             
+            // Clear all results on the page
             document.getElementById('results').style.display = 'none';
             document.getElementById('detailed-results').innerHTML = '';
             document.getElementById('score-summary').innerHTML = '';
             
+            // Re-enable the submit button
             document.getElementById('quiz-form').querySelector('button[onclick="gradeQuiz()"]').disabled = false;
             
+            // Clear all the "Correct/Incorrect" feedback messages under each question
             const allFeedback = document.querySelectorAll('.feedback');
             allFeedback.forEach(function(feedbackBox) {
                 feedbackBox.innerHTML = '';

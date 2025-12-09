@@ -20,17 +20,24 @@
     </nav>
     
     <div class="container">
-        <h1>Core Web Architecture and Protocols</h1>
+        h1>Core Web Architecture and Protocols</h1>
         
-        <h2>The Client/Server Model</h2>
-        <p>A web browser is an application that allows people to access the World Wide Web. It’s considered the client within the client/server architecture, which is a distributed structure that divides workloads between providers (servers) and requesters (clients). The browser’s primary role is to request services and resources from within a server and then present said content to the user. The browser’s job isn’t just to display the information though, it also interprets a variety of different web technologies to create an interactive user experience.]</p>
-        <p>The communication messages exchanged between them are called requests and responses. In this model, servers are the providers, hosting resources and other functionalities, while clients are the consumers, requesting content and services from the server. The distributed structure of this architecture partitions workloads and tasks between the two</p>
+        <h2>The Browser as the Client</h2>
+        <p>A web browser is an application that allows people to access the World Wide Web. It’s considered the client within the client/server architecture, which is a distributed structure that divides workloads between providers (servers) and requesters (clients). The browser’s primary role is to request services and resources from within a server and then present said content to the user. The browser’s job isn’t just to display the information though, it also interprets a variety of different web technologies to create an interactive user experience.</p>
+        <p>The communication messages exchanged between them are called requests and responses. In this model, servers are the providers, hosting resources and other functionalities, while clients are the consumers, requesting content and services from the server. The distributed structure of this architecture partitions workloads and tasks between the two.</p>
+
+        <h2>The Web Server's Role and Dynamic Content</h2>
+        <p>The client-server architecture is a fundamental concept for understanding how the web truly works. It is important to recognize that clients and servers are usually software, not necessarily dedicated hardware, and may even exist on the same computer. A web server hosts files, web sites and applications, and is located by an IP address or domain name.</p>
+        
+        <h3>The Shift to Dynamic Content</h3>
+        <p>The transition from static to dynamic content marked a significant leap in web functionality. On the server side, technologies like CGI (Common Gateway Interface) and platforms such as Java EE, PHP, Python, and .Net emerged. These allowed web servers to generate content dynamically instead of just serving static HTML files. This capability means multiple web pages can be assembled at run time, drawing information from multiple sources such as databases.</p>
+
 
         <h2>Essential Protocols and Languages</h2>
         <p>The browser acts as the interpreter of the web’s core protocols and unique languages, which are foundational to displaying content.</p>
         
         <ul>
-            <li>**HTML (Hypertext Markup Language):** Used to describe web pages. The browser reads HTML tags like "< body >" and "< h1 >" to render readable content. </li>
+            <li>**HTML (Hypertext Markup Language):** Used to describe web pages. The browser reads HTML tags like `<body>` and `<h1>` to render readable content.</li>
             <li>**CSS (Cascading Style Sheets):** Defines the style and appearance of web pages, controlling elements like font, color, and layout.</li>
             <li>**HTTP (Hypertext Transfer Protocol):** The communication language. The browser uses it to send requests and receive content from the web server.</li>
             <li>**URL (Uniform Resource Locator):** The unique address used to locate a specific resource. The browser uses this to know exactly which file and server to request.</li>

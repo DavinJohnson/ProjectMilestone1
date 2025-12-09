@@ -57,6 +57,12 @@ th, td {
     text-align: left;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 footer {
     text-align: center;
     padding: 10px;
@@ -84,6 +90,7 @@ input[type="text"] {
     border-radius: 4px;
     width: 90%;
     max-width: 300px;
+    box-sizing: border-box;
 }
 
 button {
@@ -106,40 +113,88 @@ button:hover {
     opacity: 0.9;
 }
 
-.correct {
-    color: green;
-    font-weight: bold;
-}
-
-.incorrect {
-    color: red;
-    font-weight: bold;
-}
-
-.pass {
-    background-color: #d4edda;
-    border: 1px solid green;
-    padding: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.fail {
-    background-color: #f8d7da;
-    border: 1px solid red;
-    padding: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+.pass { background-color: #d4edda; border: 1px solid green; padding: 10px; font-size: 1.2em; font-weight: bold; border-radius: 5px; margin-bottom: 10px; }
+.fail { background-color: #f8d7da; border: 1px solid red; padding: 10px; font-size: 1.2em; font-weight: bold; border-radius: 5px; margin-bottom: 10px; }
 #results {
     margin-top: 20px;
     padding: 15px;
     border: 2px dashed #333;
     background-color: #fdfdfd;
     border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 95%;
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    #main-nav ul {
+        flex-direction: column; 
+        align-items: center; 
+        padding: 5px 0;
+    }
+
+    #main-nav li {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+        border-bottom: 1px solid #444;
+    }
+
+    #main-nav li:last-child {
+        border-bottom: none;
+    }
+    
+    #main-nav a {
+        padding: 12px 0;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px dotted #ccc;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+    
+    input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .quiz-controls button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
 }
